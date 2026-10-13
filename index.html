@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMULADOR DE EMERGENCIAS PURACÉ</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container">
+
+        <!-- ================= PANTALLA 0: PORTADA VERTICAL LARGA ================= -->
+        <div id="cover-screen" class="screen active">
+            <div class="cover-card-vertical">
+                <div class="cover-badge">🏫 PROYECTO ESCOLAR</div>
+                
+                <h1 class="game-main-title">SIMULADOR DE EMERGENCIAS Y RIESGOS DE PURACÉ</h1>
+                <div class="divider"></div>
+
+                <div class="student-info-vertical">
+                    <p class="by-text">Elaborado por:</p>
+                    <h2 class="student-name">GEILYN DAYANA ASTAIZA</h2>
+                    <p class="school-text">Estudiante del grado 10B de la Institución Educativa Manuel María Mosquera</p>
+                    <span class="subject-tag">Componente Inglés</span>
+                </div>
+
+                <button class="btn-start-project" onclick="enterMainMenu()">🚀 INICIAR JUEGO ➔</button>
+            </div>
+        </div>
+
+        <!-- ================= PANTALLA 1: MENÚ PRINCIPAL ================= -->
+        <div id="menu-screen" class="screen hidden">
+            <header class="menu-header">
+                <span class="badge-tag">🌋 PURACÉ - PREVENCIÓN Y CULTURA</span>
+                <h1>CENTRO INTERACTIVO DE GESTIÓN DEL RIESGO</h1>
+                <p class="subtitle">Aprende, simula y personaliza la respuesta ante emergencias en Puracé</p>
+            </header>
+
+            <div class="menu-grid">
+                <div class="game-card card-1" onclick="startGame(1)">
+                    <div class="card-badge">ADIVINANZAS</div>
+                    <div class="card-icon">🧩</div>
+                    <h2>1. Trivias y Adivinanzas</h2>
+                    <p>Desafíos sobre prevención con el fondo natural de los Termales de San Juan y el Páramo de Puracé.</p>
+                    <div class="btn-play">Jugar Ahora ➔</div>
+                </div>
+
+                <div class="game-card card-2" onclick="startGame(2)">
+                    <div class="card-badge highlight">SIMULADOR EN VIVO</div>
+                    <div class="card-icon">🎨</div>
+                    <h2>2. Simulador del Pueblo</h2>
+                    <p>Mapa con 70 habitantes, animales, casas e Iglesia. Activa alarmas reales y personaliza colores.</p>
+                    <div class="btn-play">Entrar al Pueblo ➔</div>
+                </div>
+
+                <div class="game-card card-3" onclick="startGame(3)">
+                    <div class="card-badge">ACCIÓN</div>
+                    <div class="card-icon">🏃‍♂️</div>
+                    <h2>3. Rescate en el Páramo</h2>
+                    <p>Esquiva proyectiles volcánicos, recoge mochilas de emergencia y rescata frailejones sagrados.</p>
+                    <div class="btn-play">Iniciar Misión ➔</div>
+                </div>
+            </div>
+        </div>
+
+        <button id="btn-back" class="btn-back hidden" onclick="showMenu()">🏠 Menú Principal</button>
+
+        <!-- ================= JUEGO 1: TRIVIAS CON FONDO DE TERMALES ================= -->
+        <div id="game-1-screen" class="screen hidden">
+            <div class="game-header">
+                <h2>🧩 Desafío de Adivinanzas y Conocimientos</h2>
+                <div class="stats-bar">
+                    <span>⭐ Puntos: <strong id="g1-score">0</strong></span>
+                    <span>❤️ Vidas: <strong id="g1-lives">3</strong></span>
+                </div>
+            </div>
+
+            <div id="g1-quiz-box" class="quiz-container termales-bg">
+                <span id="g1-badge" class="level-badge">Adivinanza</span>
+                <h3 id="g1-question-text">Cargando pregunta...</h3>
+                <div id="g1-options" class="options-grid"></div>
+                <div id="g1-feedback" class="feedback-msg"></div>
+            </div>
+
+            <div id="g1-end-box" class="end-screen hidden">
+                <h2 id="g1-end-title"></h2>
+                <p id="g1-end-msg"></p>
+                <button class="btn-action" onclick="initGame1()">🔄 Jugar de Nuevo</button>
+            </div>
+        </div>
+
+        <!-- ================= JUEGO 2: SIMULADOR PUEBLO ================= -->
+        <div id="game-2-screen" class="screen hidden">
+            <div class="game-header">
+                <h2>🚨 Simulador Comunitario - Pueblo de Puracé</h2>
+                <div class="stats-bar">
+                    <span>👥 Habitantes: <strong>70</strong></span>
+                    <span>🐾 Animales: <strong>12</strong></span>
+                    <span>🎒 En Zona Segura: <strong id="g2-safe-count">0</strong></span>
+                    <span>📢 Estado: <strong id="g2-status">Normalidad</strong></span>
+                </div>
+            </div>
+
+            <div class="customizer-panel">
+                <h3>🎨 Personalizar Colores del Pueblo:</h3>
+                <div class="pickers-grid">
+                    <div class="picker-item">
+                        <label for="colorChurchWall">⛪ Iglesia (Paredes):</label>
+                        <input type="color" id="colorChurchWall" value="#ffffff">
+                    </div>
+                    <div class="picker-item">
+                        <label for="colorChurchRoof">⛪ Iglesia (Techo):</label>
+                        <input type="color" id="colorChurchRoof" value="#dc2626">
+                    </div>
+                    <div class="picker-item">
+                        <label for="colorHouseWall">🏠 Casas (Paredes):</label>
+                        <input type="color" id="colorHouseWall" value="#f8fafc">
+                    </div>
+                    <div class="picker-item">
+                        <label for="colorHouseRoof">🏠 Casas (Techos):</label>
+                        <input type="color" id="colorHouseRoof" value="#b91c1c">
+                    </div>
+                    <div class="picker-item">
+                        <label for="colorPeopleShirt">👕 Personas (Ropa):</label>
+                        <input type="color" id="colorPeopleShirt" value="#0284c7">
+                    </div>
+                    <div class="picker-item">
+                        <label for="colorPeopleSkin">👤 Personas (Piel):</label>
+                        <input type="color" id="colorPeopleSkin" value="#fca5a5">
+                    </div>
+                    <div class="picker-item">
+                        <label for="colorPeopleBag">🎒 Mochila de Emergencia:</label>
+                        <input type="color" id="colorPeopleBag" value="#dc2626">
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls-bar">
+                <button class="alarm-btn btn-t1" onclick="triggerAlarm(1)">🔔 1 Timbre: Alistamiento</button>
+                <button class="alarm-btn btn-t2" onclick="triggerAlarm(2)">🌋 2 Timbres: Ceniza / Casa</button>
+                <button class="alarm-btn btn-t3" onclick="triggerAlarm(3)">🫨 3 Timbres: EVACUACIÓN</button>
+            </div>
+
+            <div id="canvas-wrapper-2">
+                <canvas id="canvasGame2" width="950" height="550"></canvas>
+            </div>
+        </div>
+
+        <!-- ================= JUEGO 3: RESCATE EN EL PÁRAMO ================= -->
+        <div id="game-3-screen" class="screen hidden">
+            <div class="game-header">
+                <h2>🌱 Rescate en el Páramo de Puracé</h2>
+                <div class="stats-bar">
+                    <span>🏆 Nivel: <strong id="g3-lvl">1</strong>/3</span>
+                    <span>🌱 Misión: <strong id="g3-count">0</strong>/<strong id="g3-target">5</strong></span>
+                    <span>❤️ Vidas: <strong id="g3-lives">3</strong></span>
+                    <span>⏰ Tiempo: <strong id="g3-timer">45</strong>s</span>
+                </div>
+            </div>
+
+            <div id="canvas-wrapper-3">
+                <canvas id="canvasGame3" width="950" height="480"></canvas>
+            </div>
+
+            <div class="touch-controls">
+                <button class="touch-btn" id="btn-left">⬅️ Izquierda</button>
+                <button class="touch-btn" id="btn-right">Derecha ➡️</button>
+            </div>
+
+            <p class="game-info">Usa ⬅️ ➡️, teclas A/D o botones táctiles para esquivar rocas y recolectar mochilas y frailejones.</p>
+
+            <div id="g3-level-msg" class="level-overlay hidden">
+                <div class="overlay-card">
+                    <h2 id="g3-win-title">¡Nivel Completado! 🎉</h2>
+                    <p id="g3-win-desc">Has rescatado los elementos del páramo.</p>
+                    <button class="btn-action" id="g3-next-btn" onclick="nextLevelGame3()">Siguiente ➔</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
